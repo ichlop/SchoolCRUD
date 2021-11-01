@@ -13,14 +13,10 @@
 </head>
 <body>
 <%--@elvariable id="newtrainer" type="java"--%>
-<springForm:form action="inserttrainer" method="post"
-                 modelAttribute="newtrainer">
+<springForm:form action="insertTrainer" method="post" modelAttribute="newtrainer">
+
+    <p>Insert a Trainer</p>
     <table>
-        <tr>
-            <td>ID</td>
-            <td><springForm:input path="id" value=""/></td>
-            <td><springForm:errors path="id" cssClass="error"/></td>
-        </tr>
         <tr>
             <td>Firstname</td>
             <td><springForm:input path="firstname"/></td>

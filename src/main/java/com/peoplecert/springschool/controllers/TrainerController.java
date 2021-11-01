@@ -5,7 +5,10 @@ import com.peoplecert.springschool.services.TrainerServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @Controller
 public class TrainerController {
@@ -13,34 +16,30 @@ public class TrainerController {
     @Autowired
     private TrainerServiceInterface tsi;
 
-//    @GetMapping("/")
-//    public String showForm() {
-//        return "form";
-//    }
-
-    @GetMapping("/insertTrainer")
-    public String showTrainer(ModelMap mm) {
+    @GetMapping("/")
+    public String showHomePage(ModelMap mm) {
         mm.addAttribute("newtrainer", new Trainer());
-        return "trainerform";
+        return "createtrainerform";
     }
 
-    @ResponseBody
     @PostMapping("/insertTrainer")
-    public Trainer insertTrainer(/*@Valid @ModelAttribute("newtrainer"), BindingResult bindingResult*/ Trainer trainer) {
-        return tsi.insertTrainer(trainer);
-//        if (bindingResult.hasErrors()) {
-//            return "trainerform";
-//        }
+    public String insertTrainer(@Valid @ModelAttribute("newtrainer") Trainer trainer, BindingResult bindingResult) {
 
-//        return "form";
+        if (bindingResult.hasErrors()) {
+            return "createtrainerform";
+        }
+
+        tsi.insertTrainer(trainer);
+        return "resultpage";
     }
 
     @GetMapping("/allTrainers")
     public String getAllTrainers(ModelMap mm) {
         mm.addAttribute("allTrainers", tsi.getAllTrainers());
 
-        return "allTrainers";
+        return "readtrainers";
     }
+
 
     @DeleteMapping("/deleteTrainer")
     public void deleteTrainer(@RequestParam Integer id) {

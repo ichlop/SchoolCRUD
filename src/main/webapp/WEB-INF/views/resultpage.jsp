@@ -12,5 +12,9 @@
 </head>
 <body>
 Congratulations! Your submission is successful!
+
+<form action="/" method="get">
+    <input type="submit" value="GO back to main page">
+</form>
 </body>
 </html>

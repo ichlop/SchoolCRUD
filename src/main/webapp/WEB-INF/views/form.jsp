@@ -12,15 +12,23 @@
 </head>
 <body>
 
-<form>
-    <input type="submit" value="Insert a trainer">
-
-    <input type="submit" value="Insert a student">
-
-    <input type="submit" value="Insert a course">
-
-    <input type="submit" value="Insert an assignment">
+<form action="insertTrainer" method="post" modelAttribute="newtrainer">
+    <input type="submit" value="Create a trainer">
+</form>
+<form action="getAllTrainers" method="get">
+    <input type="submit" value="Read all trainers">
+</form>
+<form action="updateTrainer" method="get">
+    <input type="submit" value="Update a trainer">
+</form>
+<form action="deleteTrainer" method="delete">
+    <input type="submit" value="Delete a trainer">
 </form>
 
 </body>
 </html>
+
+// todo: in forms the right action!
+// todo: update method!
+// todo: be more creative in main form
+// todo: delete with id
