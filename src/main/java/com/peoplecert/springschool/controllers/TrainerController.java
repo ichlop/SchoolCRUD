@@ -17,7 +17,12 @@ public class TrainerController {
     private TrainerServiceInterface tsi;
 
     @GetMapping("/")
-    public String showHomePage(ModelMap mm) {
+    public String showHomePage() {
+        return "form";
+    }
+
+    @GetMapping("/insert")
+    public String insertTrainer(ModelMap mm) {
         mm.addAttribute("newtrainer", new Trainer());
         return "createtrainerform";
     }
@@ -27,22 +32,44 @@ public class TrainerController {
 
         if (bindingResult.hasErrors()) {
             return "createtrainerform";
+        } else {
+            tsi.insertTrainer(trainer);
+            return "resultpage";
         }
-
-        tsi.insertTrainer(trainer);
-        return "resultpage";
     }
 
-    @GetMapping("/allTrainers")
+    @GetMapping("/getAllTrainers")
     public String getAllTrainers(ModelMap mm) {
         mm.addAttribute("allTrainers", tsi.getAllTrainers());
 
         return "readtrainers";
     }
 
+    @GetMapping("/update/{id}")
+    public String updateTrainer(@PathVariable(value = "id") int id, ModelMap mm) {
 
-    @DeleteMapping("/deleteTrainer")
-    public void deleteTrainer(@RequestParam Integer id) {
-        tsi.deleteTrainer(id);
+        Trainer trainer = tsi.getTrainerById(id);
+        mm.addAttribute("updatetrainer", trainer);
+
+        return "updatetrainer";
+    }
+
+    @PostMapping("/updateTrainer")
+    public String updateTrainer(@Valid @ModelAttribute("updatetrainer") Trainer trainer, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            return "updatetrainer";
+        } else {
+            tsi.updateTrainer(trainer);
+            return "resultpage";
+        }
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteTrainer(@PathVariable(value = "id") int id) {
+
+        this.tsi.deleteTrainer(id);
+
+        return "resultpage";
     }
 }

@@ -11,10 +11,10 @@
     <title>Congratulations</title>
 </head>
 <body>
-Congratulations! Your submission is successful!
+Congratulations! Your action is successful!
 
 <form action="/" method="get">
-    <input type="submit" value="GO back to main page">
+    <input type="submit" value="Go back to main page">
 </form>
 </body>
 </html>
