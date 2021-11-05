@@ -16,15 +16,15 @@ import java.util.Objects;
 public class Trainer implements Serializable {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private int id;
     @Basic
-    @Size(min=1, max=45)
+    @Size(min=1, max=45, message = "firstname should be from 1 to 45 characters")
     @Column(name = "firstname", nullable = false, length = 45)
     private String firstname;
     @Basic
-    @Size(min=1, max=45)
+    @Size(min=1, max=45, message = "lastname should be from 1 to 45 characters")
     @Column(name = "lastname", nullable = false, length = 45)
     private String lastname;
 

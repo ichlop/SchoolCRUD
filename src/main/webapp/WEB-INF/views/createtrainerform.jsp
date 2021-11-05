@@ -11,16 +11,22 @@
 <head>
     <title>Trainer Form</title>
 </head>
+
+<style>
+    .error {
+        color: red;
+        font-weight: bold;
+    }
+
+</style>
+
 <body>
+
 <%--@elvariable id="newtrainer" type="java"--%>
-<springForm:form action="inserttrainer" method="post"
-                 modelAttribute="newtrainer">
+<springForm:form action="insertTrainer" method="post" modelAttribute="newtrainer">
+
+    <h2>Insert a Trainer</h2>
     <table>
-        <tr>
-            <td>ID</td>
-            <td><springForm:input path="id" value=""/></td>
-            <td><springForm:errors path="id" cssClass="error"/></td>
-        </tr>
         <tr>
             <td>Firstname</td>
             <td><springForm:input path="firstname"/></td>
@@ -34,9 +40,11 @@
 
     </table>
 
-    <input type="submit"/>
+    <input type="submit" class="btn btn-success"/>
 </springForm:form>
-
+<form action="/" method="get">
+    <input type="submit" value="GO back to main page">
+</form>
 
 </body>
 </html>

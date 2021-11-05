@@ -9,5 +9,8 @@ public interface TrainerServiceInterface {
     Trainer insertTrainer(Trainer trainer);
     List<Trainer> getAllTrainers();
     void deleteTrainer(Integer id);
+    Trainer getTrainerById(int id);
+    Trainer updateTrainer(Trainer trainer);
+
 
 }

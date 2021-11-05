@@ -5,7 +5,10 @@ import com.peoplecert.springschool.services.TrainerServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @Controller
 public class TrainerController {
@@ -13,37 +16,60 @@ public class TrainerController {
     @Autowired
     private TrainerServiceInterface tsi;
 
-//    @GetMapping("/")
-//    public String showForm() {
-//        return "form";
-//    }
+    @GetMapping("/")
+    public String showHomePage() {
+        return "form";
+    }
 
-    @GetMapping("/insertTrainer")
-    public String showTrainer(ModelMap mm) {
+    @GetMapping("/insert")
+    public String insertTrainer(ModelMap mm) {
         mm.addAttribute("newtrainer", new Trainer());
-        return "trainerform";
+        return "createtrainerform";
     }
 
-    @ResponseBody
     @PostMapping("/insertTrainer")
-    public Trainer insertTrainer(/*@Valid @ModelAttribute("newtrainer"), BindingResult bindingResult*/ Trainer trainer) {
-        return tsi.insertTrainer(trainer);
-//        if (bindingResult.hasErrors()) {
-//            return "trainerform";
-//        }
+    public String insertTrainer(@Valid @ModelAttribute("newtrainer") Trainer trainer, BindingResult bindingResult) {
 
-//        return "form";
+        if (bindingResult.hasErrors()) {
+            return "createtrainerform";
+        } else {
+            tsi.insertTrainer(trainer);
+            return "resultpage";
+        }
     }
 
-    @GetMapping("/allTrainers")
+    @GetMapping("/getAllTrainers")
     public String getAllTrainers(ModelMap mm) {
         mm.addAttribute("allTrainers", tsi.getAllTrainers());
 
-        return "allTrainers";
+        return "readtrainers";
     }
 
-    @DeleteMapping("/deleteTrainer")
-    public void deleteTrainer(@RequestParam Integer id) {
-        tsi.deleteTrainer(id);
+    @GetMapping("/update/{id}")
+    public String updateTrainer(@PathVariable(value = "id") int id, ModelMap mm) {
+
+        Trainer trainer = tsi.getTrainerById(id);
+        mm.addAttribute("updatetrainer", trainer);
+
+        return "updatetrainer";
+    }
+
+    @PostMapping("/updateTrainer")
+    public String updateTrainer(@Valid @ModelAttribute("updatetrainer") Trainer trainer, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            return "updatetrainer";
+        } else {
+            tsi.updateTrainer(trainer);
+            return "resultpage";
+        }
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteTrainer(@PathVariable(value = "id") int id) {
+
+        this.tsi.deleteTrainer(id);
+
+        return "resultpage";
     }
 }
